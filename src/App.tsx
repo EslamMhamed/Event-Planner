@@ -7,6 +7,7 @@ import EventListPage from "./pages/EventListPage.tsx"
 import EventCreatePage from "./pages/EventCreatePage.tsx"
 import EventDetailsPage from "./pages/EventDetailsPage.tsx"
 import EventEditPage from "./pages/EventEditPage.tsx"
+import EventProvider from "./context/EventContect.tsx"
 
 
 function App() {
@@ -22,7 +23,9 @@ function App() {
   ])
 
   return (
-    <RouterProvider router={route} />
+    <EventProvider>
+      <RouterProvider router={route} />
+    </EventProvider>
   )
 }
 

@@ -1,10 +1,17 @@
 import { Plus } from "lucide-react"
 import React, { useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
+import { useEventContext } from "../context/EventContect"
+import type { Attendee, Event } from "../types"
+
+type EventFormData = Omit<Event , "id" | "attendees" > & {attendeeEmail : string}
+
 
 function EventCreatePage() {
 
-  const [formData, setFormData] = useState({
+  const {state, addEvent} = useEventContext()
+
+  const [formData, setFormData] = useState<EventFormData>({
     title: "",
     description: "",
     date: "",
@@ -12,6 +19,8 @@ function EventCreatePage() {
     location: "",
     attendeeEmail: ""
   })
+
+  const [attendees, setAttendees] = useState<Attendee[]>([])
 
   const location = useLocation()
   const navigate = useNavigate()
@@ -34,10 +43,11 @@ function EventCreatePage() {
       date: formData.date,
       time: formData.time,
       location: formData.location,
+      attendees: attendees
     }
 
     addEvent(eventData)
-    
+
     navigate("/")
   }
 
